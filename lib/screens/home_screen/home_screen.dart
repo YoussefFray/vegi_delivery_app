@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
+  //singleProduct function to create a single product
   Widget singleProduct() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5),
@@ -95,8 +96,11 @@ class HomeScreen extends StatelessWidget {
                                 size: 15,
                                 color: Color(0xffd0b84c),
                               ),
-                              Text("1", style: TextStyle(fontWeight: FontWeight.bold)),
-                              Icon(Icons.add, size: 15, color: Color(0xffd0b84c)),
+                              Text("1",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                              Icon(Icons.add,
+                                  size: 15, color: Color(0xffd0b84c)),
                             ],
                           ),
                         ),
@@ -112,14 +116,77 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  Widget listTile(IconData icon, String title) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.black, size: 32),
+      title: Text(title, style: TextStyle(color: Colors.black, fontSize: 20)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFcbcbcb),
-      drawer: Drawer(),
+      //sidebar menu
+      drawer: Drawer(
+        child: Container(
+          color: Color(0xFFd6b738),
+          child: ListView(
+            children: [
+              DrawerHeader(
+                child: Row(children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.white54,
+                    radius: 40,
+                    child: CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.red,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("welcome guest"),
+                      SizedBox(
+                        height: 7,
+                      ),
+                      Container(
+                        height: 25,
+                        child: OutlinedButton(
+                          onPressed: () {},
+                          child: Text("Sign in"),
+                          style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              side: BorderSide(width: 2),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ]),
+              ),
+              listTile(Icons.home_outlined, "Home"),
+              listTile(Icons.shop_outlined, "Review Cart"),
+              listTile(Icons.person_outlined, "My Profile"),
+              listTile(Icons.notification_add_outlined, "Notifications"),
+              listTile(Icons.star_outlined, "Rating & Reviews"),
+              listTile(Icons.favorite_outline, "wishlist"),
+              listTile(Icons.copy_outlined, "Raise a complaint"),
+              listTile(Icons.format_quote_outlined, "FAQs"),
+            ],
+          ),
+        ),
+      ),
+      //body
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
-        title: Text("Home", style: TextStyle(color: Colors.black, fontSize: 17)),
+        title:
+            Text("Home", style: TextStyle(color: Colors.black, fontSize: 17)),
         actions: [
           CircleAvatar(
             radius: 12,
@@ -160,7 +227,8 @@ class HomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(right: 130, bottom: 10),
+                            padding:
+                                const EdgeInsets.only(right: 130, bottom: 10),
                             child: Container(
                               height: 50,
                               width: 100,
