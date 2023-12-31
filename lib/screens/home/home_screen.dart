@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: const Color(0xFFcbcbcb),
-        drawer: buildDrawer(),
+        drawer: buildDrawer(context),
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.black),
           title:
@@ -129,11 +129,11 @@ class HomeScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     ProductWidget(
-                      onTap: () {
-                        print('Tapped ProductWidget 1');
+                      onTap: (ProductDetails productDetails) {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => ProductOverview(),
+                            builder: (context) =>
+                                ProductOverview(productDetails: productDetails),
                           ),
                         );
                       },
@@ -145,33 +145,33 @@ class HomeScreen extends StatelessWidget {
                     ),
 
                     ProductWidget(
+                      onTap: (ProductDetails productDetails) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ProductOverview(productDetails: productDetails),
+                          ),
+                        );
+                      },
                       productImageURL:
                           'https://cdn.britannica.com/99/143599-050-C3289491/Watermelon.jpg',
                       productName: 'watermelon',
                       productPrice: 50,
-                      onTap: () {
-                        print('Tapped ProductWidget 2');
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => ProductOverview(),
-                          ),
-                        );
-                      },
                       productId: 'unique_id_2',
                     ),
                     ProductWidget(
+                      onTap: (ProductDetails productDetails) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ProductOverview(productDetails: productDetails),
+                          ),
+                        );
+                      },
                       productImageURL:
                           'https://chaldn.com/_mpimage/sobuj-angur-green-grapes-12-gm-250-gm?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D134876&q=best&v=1',
                       productName: 'grapes',
                       productPrice: 50,
-                      onTap: () {
-                        print('Tapped ProductWidget 3');
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => ProductOverview(),
-                          ),
-                        );
-                      },
                       productId: 'unique_id_3',
                     ),
                     // Add more ProductWidget instances as needed

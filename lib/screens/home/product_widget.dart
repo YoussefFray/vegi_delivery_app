@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+class ProductDetails {
+  final String productImageURL;
+  final String productName;
+  final int productPrice;
+  final String productId;
+
+  ProductDetails({
+    required this.productImageURL,
+    required this.productName,
+    required this.productPrice,
+    required this.productId,
+  });
+}
 
 class ProductWidget extends StatelessWidget {
   final String productImageURL;
   final String productName;
   final int productPrice;
-  final Function onTap;
+  final Function(ProductDetails) onTap;
   final String productId;
 
   ProductWidget({
@@ -15,12 +28,20 @@ class ProductWidget extends StatelessWidget {
     required this.productId,
   });
 
- @override
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-       // print('Tapped ProductWidget');
-        onTap(); // Call the onTap function provided by the parent
+        // Create a ProductDetails object with the product information
+        ProductDetails productDetails = ProductDetails(
+          productImageURL: productImageURL,
+          productName: productName,
+          productPrice: productPrice,
+          productId: productId,
+        );
+
+        // Call the onTap function provided by the parent and pass the product details
+        onTap(productDetails);
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 5),

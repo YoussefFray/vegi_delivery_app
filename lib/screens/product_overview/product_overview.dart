@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/screens/home/product_widget.dart';
 
 class ProductOverview extends StatefulWidget {
-  const ProductOverview({super.key});
+  final ProductDetails productDetails;
+
+  const ProductOverview({Key? key, required this.productDetails})
+      : super(key: key);
 
   @override
   State<ProductOverview> createState() => _ProductOverviewState();
@@ -17,6 +21,14 @@ class _ProductOverviewState extends State<ProductOverview> {
           "Product Overview",
           style: TextStyle(color: Colors.black87),
         ),
+      ),
+      body: Column(
+        children: [
+          Image.network(widget.productDetails.productImageURL),
+          Text(widget.productDetails.productName),
+          Text("${widget.productDetails.productPrice} £"),
+          // Display other product details as needed
+        ],
       ),
     );
   }
