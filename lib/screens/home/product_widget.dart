@@ -15,12 +15,17 @@ class ProductWidget extends StatelessWidget {
     required this.productId,
   });
 
-  @override
+ @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      height: 250,
-      width: 160,
+    return GestureDetector(
+      onTap: () {
+       // print('Tapped ProductWidget');
+        onTap(); // Call the onTap function provided by the parent
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 5),
+        height: 250,
+        width: 160,
       decoration: BoxDecoration(
         color: Colors.white, // Set the background color to white
         borderRadius: BorderRadius.circular(10),
@@ -127,6 +132,7 @@ class ProductWidget extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ),
+  );
   }
 }
