@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/screens/my_profile/my_profile.dart';
+import 'package:food_app/screens/review_cart/review_cart.dart';
 
 Widget buildDrawer(BuildContext context) {
   return Drawer(
@@ -47,7 +48,13 @@ Widget buildDrawer(BuildContext context) {
             ),
           ),
           listTile(Icons.home_outlined, "Home", () {}),
-          listTile(Icons.shop_outlined, "Review Cart", () {}),
+          listTile(Icons.shop_outlined, "Review Cart", () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ReviewCart(),
+              ),
+            );
+          }),
           listTile(Icons.person_outlined, "My Profile", () {
             Navigator.of(context).push(
               MaterialPageRoute(
