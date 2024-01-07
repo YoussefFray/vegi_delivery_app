@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/providers/product_provider.dart';
 import 'package:food_app/screens/home/drawer_side.dart';
 import 'package:food_app/screens/home/product_widget.dart';
 import 'package:food_app/screens/product_overview/product_overview.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late ProductProvider productProvider;
+  @override
+  void initState() {
+    super.initState();
+    ProductProvider productProvider = Provider.of(context, listen: false);
+    productProvider.fatchFruitsproductData();
+  }
+
   @override
   Widget build(BuildContext context) {
+    productProvider = Provider.of(context);
+
     return GestureDetector(
       onTap: () {
         print('Tapped HomeScreen');
@@ -127,6 +144,25 @@ class HomeScreen extends StatelessWidget {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
+                  children: productProvider.getFruitsProductDataList.map(
+                    (FruitsProductData) {
+                      return ProductWidget(
+                        onTap: (ProductDetails productDetails) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ProductOverview(
+                                  productDetails: productDetails),
+                            ),
+                          );
+                        },
+                        productImageURL: FruitsProductData.productImage,
+                        productName: FruitsProductData.productName,
+                        productPrice: FruitsProductData.productPrice,
+                        productId: 'unique_id_1',
+                      );
+                    },
+                  ).toList(),
+                  /*
                   children: [
                     ProductWidget(
                       onTap: (ProductDetails productDetails) {
@@ -144,38 +180,9 @@ class HomeScreen extends StatelessWidget {
                       productId: 'unique_id_1',
                     ),
 
-                    ProductWidget(
-                      onTap: (ProductDetails productDetails) {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ProductOverview(productDetails: productDetails),
-                          ),
-                        );
-                      },
-                      productImageURL:
-                          'https://cdn.britannica.com/99/143599-050-C3289491/Watermelon.jpg',
-                      productName: 'watermelon',
-                      productPrice: 50,
-                      productId: 'unique_id_2',
-                    ),
-                    ProductWidget(
-                      onTap: (ProductDetails productDetails) {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ProductOverview(productDetails: productDetails),
-                          ),
-                        );
-                      },
-                      productImageURL:
-                          'https://chaldn.com/_mpimage/sobuj-angur-green-grapes-12-gm-250-gm?src=https%3A%2F%2Feggyolk.chaldal.com%2Fapi%2FPicture%2FRaw%3FpictureId%3D134876&q=best&v=1',
-                      productName: 'grapes',
-                      productPrice: 50,
-                      productId: 'unique_id_3',
-                    ),
                     // Add more ProductWidget instances as needed
                   ],
+                  */
                 ),
               ),
             ],
