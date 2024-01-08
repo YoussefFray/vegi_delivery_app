@@ -3,6 +3,7 @@ import 'package:food_app/providers/product_provider.dart';
 import 'package:food_app/screens/home/drawer_side.dart';
 import 'package:food_app/screens/home/product_widget.dart';
 import 'package:food_app/screens/product_overview/product_overview.dart';
+import 'package:food_app/screens/search/search.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late ProductProvider productProvider;
+
   @override
   void initState() {
     super.initState();
@@ -33,13 +35,25 @@ class _HomeScreenState extends State<HomeScreen> {
         drawer: buildDrawer(context),
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.black),
-          title:
-              Text("Home", style: TextStyle(color: Colors.black, fontSize: 17)),
+          title: Text("Home", style: TextStyle(color: Colors.black, fontSize: 17)),
           actions: [
-            CircleAvatar(
-              radius: 12,
-              backgroundColor: const Color(0xFFd4d181),
-              child: Icon(Icons.search, color: Colors.black, size: 15),
+            GestureDetector(
+              onTap: () {
+                // Navigate to the search page
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => SearchPage(),
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: CircleAvatar(
+                  radius: 12,
+                  backgroundColor: const Color(0xFFd4d181),
+                  child: Icon(Icons.search, color: Colors.black, size: 15),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -162,27 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ).toList(),
-                  /*
-                  children: [
-                    ProductWidget(
-                      onTap: (ProductDetails productDetails) {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ProductOverview(productDetails: productDetails),
-                          ),
-                        );
-                      },
-                      productImageURL:
-                          'https://agritech-north.ca/cdn/shop/products/Mint_Peppermint_8.jpg?v=1690483260',
-                      productName: 'Peppermint',
-                      productPrice: 50,
-                      productId: 'unique_id_1',
-                    ),
-
-                    // Add more ProductWidget instances as needed
-                  ],
-                  */
+                
                 ),
               ),
             ],
