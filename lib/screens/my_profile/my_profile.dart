@@ -1,6 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/providers/user_provider.dart'; // Import your UserProvider
 
-class MyProfile extends StatelessWidget {
+class MyProfile extends StatefulWidget {
+  @override
+  _MyProfileState createState() => _MyProfileState();
+}
+
+class _MyProfileState extends State<MyProfile> {
+  late UserProvider userProvider; // Initialize UserProvider
+
+  @override
+  void initState() {
+    super.initState();
+    userProvider = UserProvider();
+    userProvider.getUserData(); // Fetch user data when the widget initializes
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,14 +31,11 @@ class MyProfile extends StatelessWidget {
             CircleAvatar(
               radius: 60,
               backgroundColor: Colors.blue,
-              // You can replace the image with the actual profile picture
-              // For example, you can use NetworkImage for an image from the internet
-              // or AssetImage for an image from the assets
-              backgroundImage: AssetImage('assets/profile_image.jpg'),
+              backgroundImage: NetworkImage(userProvider.currentUserData?.userImage ?? ''),
             ),
             SizedBox(height: 20),
             Text(
-              'John Doe',
+              userProvider.currentUserData?. userName ?? '',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -31,7 +43,7 @@ class MyProfile extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              'john.doe@example.com',
+              userProvider.currentUserData?.userEmail ?? '',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
