@@ -1,8 +1,10 @@
 import "package:flutter/material.dart";
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:food_app/providers/user_provider.dart';
 import 'package:food_app/screens/home/home_screen.dart';
- import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -12,6 +14,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  late UserProvider userProvider;
   Future<User?> _googleSignUp() async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn(
@@ -38,7 +41,13 @@ class _SignInState extends State<SignIn> {
       final User? user = userCredential.user;
 
       if (user != null) {
-        print("signed in ${user.displayName!}");
+        // print("signed in ${user.displayName!}");
+        userProvider.addUserData(
+          currentUser: user,
+          userName: user.displayName!,
+          userEmail: user.email!,
+          userImage: user.photoURL!,
+        );
       }
 
       return user;
@@ -50,6 +59,7 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -70,16 +80,14 @@ class _SignInState extends State<SignIn> {
                   const Text('Sign in to continue'),
                   Text(
                     'Vegi',
-                    style: TextStyle(
-                        fontSize: 50,
-                        color: Colors.white,
-                        shadows: [
-                          BoxShadow(
-                            blurRadius: 5,
-                            color: Colors.green.shade900,
-                            offset: const Offset(3, 3),
-                          )
-                        ]),
+                    style:
+                        TextStyle(fontSize: 50, color: Colors.white, shadows: [
+                      BoxShadow(
+                        blurRadius: 5,
+                        color: Colors.green.shade900,
+                        offset: const Offset(3, 3),
+                      )
+                    ]),
                   ),
                   Column(
                     children: [
@@ -89,13 +97,13 @@ class _SignInState extends State<SignIn> {
                         onPressed: () {},
                       ),
                       SignInButton(
-                          Buttons.Google,
+                        Buttons.Google,
                         text: "Sign in with Google",
                         onPressed: () async {
                           await _googleSignUp().then(
                             (value) => Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                builder: (context) =>  HomeScreen(),
+                                builder: (context) => HomeScreen(),
                               ),
                             ),
                           );
